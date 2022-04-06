@@ -12,7 +12,16 @@
 body{
 /*background: #/*00FFFF;*/
 }
-
+.row {
+  margin-left:-5px;
+  margin-right:-5px;
+}
+  
+.column {
+  float: left;
+  width: 25%;
+  padding: 5px;
+}
 </style>
 <?php
 include("Connection.php");
@@ -36,7 +45,7 @@ $to=$_POST['to'];
 </div>
 <!--FORM CENTER CLOSE---->
 
-<br>
+<br><br>
 
 <?php
 //DATE WISE SUBSCRIBER COUNT 
@@ -44,8 +53,11 @@ $to=$_POST['to'];
 $sql3="SELECT DATE(date_za) as date,count(distinct msisdn) as msisdn from funz_mtn_status_changed where DATE(date_za) between '$from' and '$to' and status='ACTIVE' group by DATE(date_za)";
 $result3 = $mysqli->query($sql3);
 ?>
+
 <div class="container" >
-  <h3>DATE WISE SUBSCRIBER COUNT </h3>
+  <div class="row">
+   <div class="column">
+   <p><strong>DATE WISE SUBSCRIBER COUNT</strong> </p>
 <table class="table table-striped">
     <thead>
     <tr>
@@ -73,8 +85,8 @@ while($row3=$result3->fetch_array())
 $sql3="SELECT DATE(date_za) as date,count(distinct msisdn) as msisdn from funzstation_billing_mtn where DATE(date_za) between '$from' and '$to' and status='SUCCESS' group by DATE(date_za)";
 $result3 = $mysqli->query($sql3);
 ?>
-<div class="container" >
-  <h3>DATE WISE RENEWAL COUNT</h3>
+<div class="column" >
+  <p><strong>DATE WISE RENEWAL COUNT</strong></p>
 <table class="table table-striped">
     <thead>
     <tr>
@@ -105,8 +117,8 @@ while($row3=$result3->fetch_array())
 $sql3="SELECT DATE(date_za) as date,sum(billedAmount) as rev  from funzstation_billing_mtn where DATE(date_za) between '$from' and '$to' and status='SUCCESS' group by DATE(date_za)";
 $result3 = $mysqli->query($sql3);
 ?>
-<div class="container" >
-  <h3>DATE WISE REVENUE COUNT(RENEWAL + DAILY BILLING)</h3>
+<div class="column" >
+  <p><strong>RENEWAL DAILY BILLING</strong></p>
 <table class="table table-striped">
     <thead>
     <tr>
@@ -135,8 +147,8 @@ while($row3=$result3->fetch_array())
 $sql3="SELECT DATE(date_za) as date,count(status)  as unsub_msisdn from funz_mtn_status_changed where DATE(date_za) between '$from' and '$to' and status='SUSPENDED' group by DATE(date_za)";
 $result3 = $mysqli->query($sql3);
 ?>
-<div class="container" >
-   <H3> DATE WISE UNSUB COUNT </H3>
+<div class="column" >
+   <p> <strong>DATE WISE UNSUB COUNT </strong></p>
 <table class="table table-striped">
     <thead>
     <tr>
@@ -157,4 +169,6 @@ while($row3=$result3->fetch_array())
 <?php
 } ?>
 </table>
+</div>
+</div>
 </div>

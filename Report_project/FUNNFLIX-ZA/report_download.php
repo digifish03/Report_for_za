@@ -12,7 +12,16 @@
 body{
 /*background: #/*00FFFF;*/
 }
-
+.row {
+  margin-left:-5px;
+  margin-right:-5px;
+}
+  
+.column {
+  float: left;
+  width: 25%;
+  padding: 5px;
+}
 </style>
 <?php
 header('Content-Type: application/xls');
@@ -21,7 +30,25 @@ include("Connection.php");
 $from=$_POST['from'];
 $to=$_POST['to'];
 ?>
-<br>
+<!---FOR DOWNLOAD----------->
+<div class="container h-100">
+    <div class="row h-100 justify-content-center align-items-center">
+        <div class="col-10 col-md-8 col-lg-6">
+          <!---FOR FORM CENTER----------->
+          <form method="post" action="report_download.php" >
+            <!-- <p><b>FROM</b></p> -->
+            <input type="hidden" name="from" value="<?php echo $from;?>" readonly/>
+            <!-- <p><b>TO</b></p> -->
+            <input type="hidden" name="to" value="<?php echo $to;?>" readonly/>
+            <input type="submit" name="export" class="btn btn-success" value="Downlaod Detailed Report" />
+          </form>
+        </div>
+    </div>      
+</div>
+<!--FORM CENTER CLOSE---->
+
+<br><br>
+
 <?php
 //DATE WISE SUBSCRIBER COUNT 
 
@@ -29,6 +56,9 @@ $sql3="SELECT DATE(date_za) as date,count(distinct msisdn) as msisdn from funnfl
 $result3 = $mysqli->query($sql3);
 ?>
 <div class="container" >
+<div class="row" >
+<div class="column">
+  <p> <strong>DATE WISE SUBSCRIBER COUNT</strong></p>
 <table class="table table-striped">
     <thead>
     <tr>
@@ -52,11 +82,11 @@ while($row3=$result3->fetch_array())
 <br>
 <?php
 //DATE WISE RENEWAL COUNT
-
 $sql3="SELECT DATE(date_za) as date,count(distinct msisdn) as msisdn from funnflix_billing_mtn where DATE(date_za) between '$from' and '$to' and status='SUCCESS' group by DATE(date_za)";
 $result3 = $mysqli->query($sql3);
 ?>
-<div class="container" >
+<div class="column">
+  <p><strong>DATE WISE RENEWAL COUNT</strong></p>
 <table class="table table-striped">
     <thead>
     <tr>
@@ -83,11 +113,11 @@ while($row3=$result3->fetch_array())
 <?php
 //DATE WISE REVENUE COUNT(RENEWAL + DAILY BILLING)
 
-
 $sql3="SELECT DATE(date_za) as date,sum(billedAmount) as rev  from funnflix_billing_mtn where DATE(date_za) between '$from' and '$to' and status='SUCCESS' group by DATE(date_za)";
 $result3 = $mysqli->query($sql3);
 ?>
-<div class="container" >
+<div class="column" >
+  <p><strong>RENEWAL DAILY BILLING</strong></p>
 <table class="table table-striped">
     <thead>
     <tr>
@@ -116,8 +146,8 @@ while($row3=$result3->fetch_array())
 $sql3="SELECT DATE(date_za) as date,count(distinct msisdn)  as unsub_msisdn from funnflix_mtn_status_changed where DATE(date_za) between '$from' and '$to' and status='SUSPENDED' group by DATE(date_za)";
 $result3 = $mysqli->query($sql3);
 ?>
-<div class="container" >
-   <H3> DATE WISE UNSUB COUNT </H3>
+<div class="column" >
+   <p> <strong>DATE WISE UNSUB COUNT</strong> </p>
 <table class="table table-striped">
     <thead>
     <tr>
@@ -138,4 +168,6 @@ while($row3=$result3->fetch_array())
 <?php
 } ?>
 </table>
+</div>
+</div>
 </div>

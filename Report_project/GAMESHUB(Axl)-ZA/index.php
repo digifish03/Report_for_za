@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <?php include("Connection.php"); ?>
-  <title>GAMESHUB(Axl) REPORT FOR ZA  PROMOTIONS</title>
+  <title>GAMESHUB(Axl) REPORT FOR ZA PROMOTIONS</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -11,60 +12,64 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
   <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
   <script>
-$(document).ready(function(){
-    $("#submitBtn").click(function(){
-    //    $("#myForm").submit();
-         var from = $("#from").val();
-         var to= $("#to").val();
-         $.ajax({
-            type        : 'POST',
-            url         : 'report.php',
-            data        : {from:from,to:to},
-            dataType    : 'text',
+    $(document).ready(function() {
+      $("#submitBtn").click(function() {
+        $("#loader").append('<div class="spinner-border text-primary"></div>');
+        var from = $("#from").val();
+        var to = $("#to").val();
+        $.ajax({
+          type: 'POST',
+          url: 'report.php',
+          data: {
+            from: from,
+            to: to
+          },
+          dataType: 'text',
 
-             beforesend:function()
-                                  {
-                                      $('.loader').show();
-                                  },
-             success: function(data){
-                                     $('#table_xy').html(data);
-                                     $('.loader').hide()
-                                },
-             // error: function(){
-             //                       alert('failure');
-               //                 }
-                }) ;
+
+          success: function(data) {
+            $('#loader').hide();
+            $('#table_xy').html(data);
+
+          },
+          // error: function(){
+          //                       alert('failure');
+          //                 }
+        });
+      });
     });
-});
-</script>
+  </script>
 </head>
 <style>
-body{
-/*background: #00FFFF;*/
-}
-
+  /* .body {
+    /*background: #00FFFF
+  } */
 </style>
+
 <body>
-<div class="container">
-  <h2>GAMESHUB(Axl) REPORT FOR ZA</h2>
-  <!-- <p>Promotions Details of EPICON REPORT FOR ZA.</p> -->
- <br>
+  <div class="container">
+    <h2>GAMESHUB(Axl) REPORT FOR ZA</h2>
+    <!-- <p>Promotions Details of EPICON REPORT FOR ZA.</p> -->
+    <br>
 
-  <form class="form-inline" action="index.php">
-    <label style="font-size: 20px;" for="from">From: </label>
-    <input style="margin-right: 15px;" type="date" class="form-control" id="from" placeholder="Enter from" name="from">
-    <label style="font-size: 20px;" for="to">To: </label>
-    <input  style="margin-left: ;" type="date" class="form-control" id="to" placeholder="Enter to" name="to">
-    <br><br>
-    <button style="margin-left: 25px;" type="button" class="btn btn-primary" id="submitBtn">Submit</button>
-  </form>
-</div>
+    <form class="form-inline" action="index.php">
+      <label style="font-size: 20px;" for="from">From: </label>
+      <input style="margin-right: 15px;" type="date" class="form-control" id="from" placeholder="Enter from" name="from">
+      <label style="font-size: 20px;" for="to">To: </label>
+      <input style="margin-left: 20px; " type="date" class="form-control" id="to" placeholder="Enter to" name="to">
+      <br><br>
+      <button style="margin-left: 25px;" type="button" class="btn btn-primary" id="submitBtn">Submit</button>
 
-<br>
-<br>
-<!-- <div class="getter">
+      <div style="margin-top:15%" id="loader">
+      </div>
+    </form>
+  </div>
+
+  <br><br>
+  <!-- <div class="getter">
 </div> -->
-<div id="table_xy">
- </div>
+  <div id="table_xy">
+  </div>
 </body>
+
 </html>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <?php include("Connection.php"); ?>
-  <title>UNZSTATION REPORT FOR ZA  PROMOTIONS</title>
+  <title>FUNZSTATION REPORT FOR ZA  PROMOTIONS</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -14,6 +14,7 @@
 $(document).ready(function(){
     $("#submitBtn").click(function(){
     //    $("#myForm").submit();
+    $('#loader').append('<div class="spinner-border text-primary"></div>');
          var from = $("#from").val();
          var to= $("#to").val();
          $.ajax({
@@ -22,13 +23,11 @@ $(document).ready(function(){
             data        : {from:from,to:to},
             dataType    : 'text',
 
-             beforesend:function()
-                                  {
-                                      $('.loader').show();
-                                  },
+        
              success: function(data){
+                                     $('#loader').hide()
                                      $('#table_xy').html(data);
-                                     $('.loader').hide()
+                                    
                                 },
              // error: function(){
              //                       alert('failure');
@@ -46,7 +45,7 @@ body{
 </style>
 <body>
 <div class="container">
-  <h2>UNZSTATION REPORT FOR ZA</h2>
+  <h2>FUNZSTATION REPORT FOR ZA</h2>
   <!-- <p>Promotions Details of EPICON REPORT FOR ZA.</p> -->
  <br>
 
@@ -57,13 +56,13 @@ body{
     <input  style="margin-left: ;" type="date" class="form-control" id="to" placeholder="Enter to" name="to">
     <br><br>
     <button style="margin-left: 25px;" type="button" class="btn btn-primary" id="submitBtn">Submit</button>
+    <div  style="margin-top:15%" id="loader">
+   </div>
   </form>
 </div>
-
-<br>
-<br>
 <!-- <div class="getter">
 </div> -->
+<br><br>
 <div id="table_xy">
  </div>
 </body>
