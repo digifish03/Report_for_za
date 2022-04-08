@@ -47,13 +47,13 @@ $to = $_POST['to'];
 <?php
 //DATE WISE SUBSCRIBER COUNT 
 
-$sql3 = "SELECT DATE(date_za) as date,count(distinct user_msisdn) as msisdn from gameshubStatusAxl where DATE(date_za) between '$from' and '$to' and status='ACTIVE' group by DATE(date_za)";
+$sql3 = "SELECT DATE(date_ZA) as date,count(distinct user_msisdn) as msisdn from gameshubStatusAxl where DATE(date_ZA) between '$from' and '$to' and status_name='ACTIVE' group by DATE(date_ZA)";
 $result3 = $mysqli->query($sql3);
 ?>
 <div class="container">
   <div class="row">
     <div class="column">
-      <h3>DATE WISE SUBSCRIBER COUNT </h3>
+      <p><strong>DATE WISE SUBSCRIBER COUNT</strong> </p>
       <table class="table table-striped">
         <thead>
           <tr>
@@ -76,8 +76,7 @@ $result3 = $mysqli->query($sql3);
     <br>
     <?php
     //DATE WISE RENEWAL COUNT
-
-    $sql3 = "SELECT DATE(date_za) as date,count(distinct user_msisdn) as msisdn from gameshubBillingAxl where DATE(date_za) between '$from' and '$to' and status='SUCCESS' group by DATE(date_za)";
+    $sql3 = "SELECT DATE(date_ZA) as date,count(distinct user_msisdn) as msisdn from gameshubBillingAxl where DATE(date_ZA) between '$from' and '$to' and status_name='SUCCESS' group by DATE(date_ZA)";
     $result3 = $mysqli->query($sql3);
     ?>
     <div class="column">
@@ -106,10 +105,10 @@ $result3 = $mysqli->query($sql3);
     <br>
     <?php
     //DATE WISE REVENUE COUNT(RENEWAL + DAILY BILLING)
+    $sql3 = "SELECT DATE(date_ZA) as date,sum(amount) as rev  from gameshubBillingAxl where DATE(date_ZA) between '$from' and '$to' and status_name='SUCCESS' group by DATE(date_ZA)";
 
-
-    $sql3 = "SELECT DATE(date_za) as date,sum(amount) as rev  from gameshubBillingAxl where DATE(date_za) between '$from' and '$to' and status='SUCCESS' group by DATE(date_za)";
     $result3 = $mysqli->query($sql3);
+    
     ?>
     <div class="column">
       <p><strong>RENEWAL DAILY BILLING</strong></p>
@@ -136,8 +135,7 @@ $result3 = $mysqli->query($sql3);
     <br>
     <?php
     //DATE WISE UNSUB COUNT 
-
-    $sql3 = "SELECT DATE(date_za) as date,count(status_name)  as unsub_msisdn from gameshubStatusAxl where DATE(date_za) between '$from' and '$to' and status='SUSPENDED' group by DATE(date_za)";
+    $sql3 = "SELECT DATE(date_ZA) as date,count(status_name)  as unsub_msisdn from gameshubStatusAxl where DATE(date_ZA) between '$from' and '$to' and status_name='SUSPENDED' group by DATE(date_ZA)";
     $result3 = $mysqli->query($sql3);
     ?>
     <div class="column">
